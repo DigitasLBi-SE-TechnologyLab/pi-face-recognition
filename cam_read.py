@@ -57,7 +57,7 @@ def handle_response(response):
 
 
 
-def record_cam():
+def record_forever():
   while True:
     data = io.BytesIO()
 
@@ -72,5 +72,5 @@ def record_cam():
 
 
 if __name__ == '__main__':
-  record_cam()
+  record_forever()
 
