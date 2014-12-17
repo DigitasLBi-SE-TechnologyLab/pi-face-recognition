@@ -1,0 +1,15 @@
+{
+  "known": [
+    "Hey {name}! Nice to see you.",
+    "You're looking good {name}.",
+    "Damn {name}, you're looking sharp!",
+    "Glad to see you {name}. Welcome.",
+    "Welcome back {name}"
+  ],
+  "unknown": [
+    "Hi there.",
+    "Hello stranger.",
+    "Welcome",
+    "Have a nice day here at Digitas LBi"
+  ]
+}
