@@ -1,9 +1,14 @@
 
 import json
 import random
+import subprocess
 
 class Greeter:
   GREETINGS_FILE = 'greetings.json'
+  enabled_output = {
+    "voice": False,
+    "print": True
+  }
 
   def __init__(self):
     self.load_greetings()
@@ -11,6 +16,11 @@ class Greeter:
   def load_greetings(self):
     with open(self.GREETINGS_FILE, 'r') as file:
       self.greetings = json.load(file)
+
+  def set_output_methods(self, options):
+    s = options.split('|')
+    self.enabled_output["voice"] = True if "voice" in s else False
+    self.enabled_output["print"] = True if "print" in s else False
 
   def greet(self, name=None):
     greetings_category = 'known'
@@ -22,5 +32,9 @@ class Greeter:
 
     greeting = greeting.replace('{name}', name or 'stranger')
 
-    print greeting
+    if self.enabled_output['voice']:
+      subprocess.call(['espeak', greeting])
+    if self.enabled_output['print']:
+      print greeting
+
 
