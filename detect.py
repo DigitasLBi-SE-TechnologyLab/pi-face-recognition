@@ -10,6 +10,9 @@ from greeter import Greeter
 IP = 'se-hekwal'
 PORT = '8090'
 
+# TODO
+# Throttle requests when receiving errors from server
+
 class Detector:
   headers = {
     'form': {
@@ -20,6 +23,7 @@ class Detector:
 
   def __init__(self):
     self.greeter = Greeter()
+    self.greeter.set_output_methods('voice|print')
 
 
   def set_threading_enabled(self, value):
@@ -49,7 +53,7 @@ class Detector:
   def handle_response(self, response):
     if response.status != 200 or response.reason != 'OK':
       print 'Error in response from server', response.status, response.reason
-      print response.read()
+      # print response.read()
       return
 
     faces = json.loads(response.read())
@@ -66,5 +70,7 @@ class Detector:
       self.greeter.greet(name)
     else:
       self.greeter.greet(None)
+
+
 
 
