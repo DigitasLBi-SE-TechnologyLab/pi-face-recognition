@@ -1,7 +1,11 @@
+# greeter.py
 
 import json
 import random
 import subprocess
+import os
+
+FNULL = open(os.devnull, 'w')
 
 class Greeter:
   GREETINGS_FILE = 'greetings.json'
@@ -32,9 +36,9 @@ class Greeter:
 
     greeting = greeting.replace('{name}', name or 'stranger')
 
-    if self.enabled_output['voice']:
-      subprocess.call(['espeak', greeting])
     if self.enabled_output['print']:
       print greeting
+    if self.enabled_output['voice']:
+      subprocess.call(['espeak', greeting], stdout=FNULL, stderr=subprocess.STDOUT)
 
 

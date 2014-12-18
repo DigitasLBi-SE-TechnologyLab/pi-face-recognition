@@ -1,3 +1,5 @@
+# detect.py
+
 
 import httplib
 import urllib

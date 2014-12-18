@@ -1,11 +1,11 @@
+# pi_recorder.py
 
 import picamera
 import numpy
 import io
 
 
-def record_forever(Detector):
-  detector = Detector()
+def record_forever(detector):
   while True:
     data = io.BytesIO()
 
