@@ -9,7 +9,7 @@ import json
 
 from greeter import Greeter
 
-IP = 'localhost'
+IP = 'se-hekwal'
 # IP = 'localhost'
 PORT = '8090'
 # PORT = '54465'
