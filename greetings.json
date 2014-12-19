@@ -11,5 +11,9 @@
     "Hello stranger.",
     "Welcome",
     "Have a nice day here at Digitas LBi"
+  ],
+  "any": [
+    "Today is %D",
+    "The current time is %h %m"
   ]
 }

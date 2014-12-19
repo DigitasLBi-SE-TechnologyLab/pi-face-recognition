@@ -9,8 +9,10 @@ import json
 
 from greeter import Greeter
 
-IP = 'se-hekwal'
+IP = 'localhost'
+# IP = 'localhost'
 PORT = '8090'
+# PORT = '54465'
 
 # TODO
 # Throttle requests when receiving errors from server
@@ -55,7 +57,7 @@ class Detector:
   def handle_response(self, response):
     if response.status != 200 or response.reason != 'OK':
       print 'Error in response from server', response.status, response.reason
-      # print response.read()
+      print response.read()
       return
 
     faces = json.loads(response.read())
@@ -68,7 +70,9 @@ class Detector:
     if len(faces) == 1:
       face = faces[0]
       name = face['Name']
-      name = name if name is not 'Unknown' else None
+      confidence = face['Confidence']
+      print 'Found %s with confidence %s' % (name, confidence)
+      name = name if name is not 'Unknown' and confidence < 4000 else None
       self.greeter.greet(name)
     else:
       self.greeter.greet(None)
