@@ -28,7 +28,9 @@ class Detector:
 
   confidence_threshold = 4000
 
-  def __init__(self):
+  def __init__(self, ip=None, port=None):
+    self.ip = ip or IP
+    self.port = port or PORT
     self.greeter = Greeter()
     self.greeter.set_output_methods('voice|print')
 
@@ -51,7 +53,7 @@ class Detector:
     }
     headers = self.headers['form']
 
-    conn = httplib.HTTPConnection(IP, PORT)
+    conn = httplib.HTTPConnection(self.ip, self.port)
     conn.request('POST', '/api/face/detect', urllib.urlencode(params), headers)
     self.handle_response(conn.getresponse())
     conn.close()
@@ -65,22 +67,20 @@ class Detector:
 
     faces = json.loads(response.read())
 
-    if not faces:
-      print 'no faces detected'
-      return
+    self.greeter.greet_faces(faces)
 
-    # Only one face
-    if len(faces) == 1:
-      face = faces[0]
-      name = face['Name']
-      confidence = face['Confidence']
-      print 'Found %s with confidence %s' % (name, confidence)
-      if name is 'Unknown' or confidence > self.confidence_threshold:
-        name = None;
-      self.greeter.greet(name)
-    else:
-      self.greeter.greet(None)
+    # if not faces:
+    #   print 'no faces detected'
+    #   return
 
-
-
-
+    # # Only one face
+    # if len(faces) == 1:
+    #   face = faces[0]
+    #   name = face['Name']
+    #   confidence = face['Confidence']
+    #   print 'Found %s with confidence %s' % (name, confidence)
+    #   if name is 'Unknown' or confidence > self.confidence_threshold:
+    #     name = None;
+    #   self.greeter.greet(name)
+    # else:
+    #   self.greeter.greet(None)

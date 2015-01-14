@@ -14,7 +14,7 @@
   ],
   "any": [
     "Today is %D",
-    "The current time is %h %m"
+    "The current time is %H:%M"
   ],
   "multiple": [
     "I see {count} faces. {known_count} faces I recognize and {unknown_count} new faces. Glad to see you all."

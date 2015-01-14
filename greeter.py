@@ -15,21 +15,51 @@ class Greeter:
     "print": True
   }
 
+  confidence_threshold = 4000
+
   # only greet known names with 30s interval
   greeting_delay_s = 30
   recent_greetings = {}
 
+
+
   def __init__(self):
     self.load_greetings()
+
 
   def load_greetings(self):
     with open(self.GREETINGS_FILE, 'r') as file:
       self.greetings = json.load(file)
 
+
   def set_output_methods(self, options):
     s = options.split('|')
     self.enabled_output["voice"] = True if "voice" in s else False
     self.enabled_output["print"] = True if "print" in s else False
+
+
+  def log(self, *argv):
+    if self.enabled_output['print']:
+      print ' '.join(argv)
+
+  
+  def speak(self, message):
+    self.log(message)
+    if self.enabled_output['voice']:
+      subprocess.call(['espeak', message], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
+  def get_known_faces(self, faces):
+    return [face for face in faces if face['name'] != 'Unknown' and face['confidence'] < self.confidence_threshold]
+
+
+  def get_greeting(self, category):
+    greetings = self.greetings[category]
+    greeting = greetings[random.randint(0, len(greetings)-1)]
+    # add regex data replace
+    return greeting
+
+
 
   def greet(self, name=None):
     if name is not None:
@@ -37,37 +67,60 @@ class Greeter:
       if name in self.recent_greetings:
         last_greeting = self.recent_greetings[name]
         if now - last_greeting < self.greeting_delay_s:
-          if self.enabled_output["print"]:
-            print 'recently greeted %s' % name
+          self.log('recently greeted %s' % name)
           return
       self.recent_greetings[name] = now
-
 
     greetings_category = 'known'
     if name is None:
       greetings_category = 'unknown'
 
-    greetings = self.greetings[greetings_category]
-    greeting = greetings[random.randint(0, len(greetings)-1)]
+    greeting = self.get_greeting(greetings_category)
 
     greeting = greeting.replace('{name}', name or 'stranger')
 
-    if self.enabled_output['print']:
-      print greeting
-    if self.enabled_output['voice']:
-      subprocess.call(['espeak', greeting], stdout=FNULL, stderr=subprocess.STDOUT)
+    self.speak(greeting)
+      
 
-  def greet_faces(self, faces, known):
+  def greet_multiple(self, faces):
+    known = self.get_known_faces(faces)
+    unknown = [face for face in faces if face not in known]
+
+    greeting = self.get_greeting('multiple')
+    greeting = greeting.replace('{count}', str(len(faces)))
+    greeting = greeting.replace('{known_count}', str(len(known)))
+    greeting = greeting.replace('{unknown_count}', str(len(unknown)))
+
+    print greeting
+
+
+  def greet_faces(self, faces):
     face_count = len(faces)
 
     if face_count == 0:
-      if self.enabled_output['print']:
-        print 'no faces detected'
+      self.log('no faces detected')
       return
 
     if face_count == 1:
-      self.greet(face if face is not 'Unknow' else None)
+      face = faces[0]
+      name = face['name']
+      self.greet(name if name is not 'Unknown' else None)
       return
 
-    
+    # Greet multiple
+    self.greet_multiple(faces)
 
+
+if __name__ == '__main__':
+  greeter = Greeter()
+  greeter.set_output_methods('print')
+  greeter.greet_faces([{
+    "name": "Hektor",
+    "confidence": 3000
+  }, {
+    "name": "Robert",
+    "confidence": 2000
+  }, {
+    "name": "Patric",
+    "confidence": 4500
+  }])
