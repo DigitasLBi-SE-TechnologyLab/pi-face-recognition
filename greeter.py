@@ -91,7 +91,7 @@ class Greeter:
     greeting = greeting.replace('{known_count}', str(len(known)))
     greeting = greeting.replace('{unknown_count}', str(len(unknown)))
 
-    print greeting
+    self.speak(greeting)
 
 
   def greet_faces(self, faces):
