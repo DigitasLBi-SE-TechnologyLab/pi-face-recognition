@@ -6,25 +6,32 @@ import random
 import subprocess
 import os
 
+import config
+
 FNULL = open(os.devnull, 'w')
 
 class Greeter:
   GREETINGS_FILE = 'greetings.json'
+  # settings overriden by config file
   enabled_output = {
     "voice": False,
     "print": True
   }
-
   confidence_threshold = 4000
-
-  # only greet known names with 30s interval
   greeting_delay_s = 30
   recent_greetings = {}
 
 
-
   def __init__(self):
+    self.config = config.get()
     self.load_greetings()
+
+    if 'output_methods' in self.config:
+      self.set_output_methods(self.config['output_methods'])
+    if 'greeting_delay_s' in self.config:
+      self.greeting_delay_s = self.config['greeting_delay_s']
+    if 'confidence_threshold' in self.config:
+      self.confidence_threshold = self.config['confidence_threshold']
 
 
   def load_greetings(self):
@@ -115,7 +122,8 @@ class Greeter:
       return
 
     # Greet multiple
-    self.greet_multiple(faces)
+    # self.greet_multiple(faces)
+    self.greet(None)
 
 
 if __name__ == '__main__':

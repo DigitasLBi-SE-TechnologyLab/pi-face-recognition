@@ -7,6 +7,8 @@ import base64
 import threading
 import json
 
+import config
+
 from greeter import Greeter
 
 # IP = '157.125.54.102'
@@ -29,10 +31,11 @@ class Detector:
   confidence_threshold = 4000
 
   def __init__(self, ip=None, port=None):
-    self.ip = ip or IP
-    self.port = port or PORT
+    self.config = config.get()
+    self.ip = ip or ('server_ip' in self.config['server_ip'] or IP)
+    self.port = port or ('server_port' in self.config['server_port'] or PORT)
     self.greeter = Greeter()
-    self.greeter.set_output_methods('voice|print')
+    # self.greeter.set_output_methods('voice|print')
 
 
   def set_threading_enabled(self, value):
