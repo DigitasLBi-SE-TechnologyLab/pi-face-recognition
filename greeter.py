@@ -48,9 +48,11 @@ class Greeter:
     if self.enabled_output['voice']:
       subprocess.call(['espeak', message], stdout=FNULL, stderr=subprocess.STDOUT)
 
+  def is_recognized(self, face):
+    return face['Name'] != 'Unknown' and face['Confidence'] < self.confidence_threshold
 
   def get_known_faces(self, faces):
-    return [face for face in faces if face['Name'] != 'Unknown' and face['Confidence'] < self.confidence_threshold]
+    return [face for face in faces if self.is_recognized(face)]
 
 
   def get_greeting(self, category):
@@ -107,7 +109,9 @@ class Greeter:
     if face_count == 1:
       face = faces[0]
       name = face['Name']
-      self.greet(name if name is not 'Unknown' else None)
+      if not self.is_recognized(face):
+        name = None
+      self.greet(name)
       return
 
     # Greet multiple
