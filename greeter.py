@@ -50,7 +50,7 @@ class Greeter:
 
 
   def get_known_faces(self, faces):
-    return [face for face in faces if face['name'] != 'Unknown' and face['confidence'] < self.confidence_threshold]
+    return [face for face in faces if face['Name'] != 'Unknown' and face['Confidence'] < self.confidence_threshold]
 
 
   def get_greeting(self, category):
@@ -101,9 +101,12 @@ class Greeter:
       self.log('no faces detected')
       return
 
+    l = 'faces found %s'% ', '.join(['%s:%s' % (face['Name'],face['Confidence']) for face in faces])
+    self.log(l)
+
     if face_count == 1:
       face = faces[0]
-      name = face['name']
+      name = face['Name']
       self.greet(name if name is not 'Unknown' else None)
       return
 
@@ -115,12 +118,12 @@ if __name__ == '__main__':
   greeter = Greeter()
   greeter.set_output_methods('print')
   greeter.greet_faces([{
-    "name": "Hektor",
-    "confidence": 3000
+    "Name": "Hektor",
+    "Confidence": 3000
   }, {
-    "name": "Robert",
-    "confidence": 2000
+    "Name": "Robert",
+    "Confidence": 2000
   }, {
-    "name": "Patric",
-    "confidence": 4500
+    "Name": "Patric",
+    "Confidence": 4500
   }])
