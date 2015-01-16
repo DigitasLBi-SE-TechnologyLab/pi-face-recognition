@@ -53,7 +53,7 @@ class Greeter:
   def speak(self, message):
     self.log(message)
     if self.enabled_output['voice']:
-      subprocess.call(['espeak', message], stdout=FNULL, stderr=subprocess.STDOUT)
+      subprocess.call(['espeak', '"%s"' % message], stdout=FNULL, stderr=subprocess.STDOUT)
 
   def is_recognized(self, face):
     return face['Name'] != 'Unknown' and face['Confidence'] < self.confidence_threshold
