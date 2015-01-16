@@ -7,21 +7,15 @@
     "Welcome back {name}"
   ],
   "unknown": [
-    "Hi there.",
-    "Hi",
-    "Hello",
-    "Hello there",
+    "good morning! You look absolutly great today!",
+    "Hello, nice to see you here. Welcome!",
     "Hello stranger.",
     "Hi, Welcome to Digitas LBi",
     "Welcome to Digitas LBi",
-    "Hello, Have a nice day here at Digitas LBi",
-    "Good to see you",
-    "Nice to see you",
-    "Howdy",
-    "Yo",
-    "Wazzup",
-    "Howdy",
-    "Alright mate"
+    "Hello. Yes you.",
+    "Yo! what's up with my dawg?",
+    "Howdy partner!",
+    "Cheerio mate, check out our office and feel like home!"
   ],
   "any": [
     "Today is %D",
