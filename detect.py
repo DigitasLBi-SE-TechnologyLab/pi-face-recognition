@@ -56,10 +56,13 @@ class Detector:
     }
     headers = self.headers['form']
 
-    conn = httplib.HTTPConnection(self.ip, self.port)
-    conn.request('POST', '/api/face/detect', urllib.urlencode(params), headers)
-    self.handle_response(conn.getresponse())
-    conn.close()
+    try:
+      conn = httplib.HTTPConnection(self.ip, self.port)
+      conn.request('POST', '/api/face/detect', urllib.urlencode(params), headers)
+      self.handle_response(conn.getresponse())
+      conn.close()
+    except:
+      print 'connection to server failed'
 
 
   def handle_response(self, response):
