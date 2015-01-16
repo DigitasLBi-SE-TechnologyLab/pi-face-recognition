@@ -1,6 +1,6 @@
 {
 	"server_ip": "157.125.54.102",
-	"server_port": "8090",
+	"server_port": "8095",
 	"output_methods": "voice|print",
 	"greeting_delay_s": "30",
 	"confidence_threshold": "2000"

@@ -31,9 +31,11 @@ class Detector:
   confidence_threshold = 4000
 
   def __init__(self, ip=None, port=None):
-    self.config = config.get()
-    self.ip = ip or ('server_ip' in self.config['server_ip'] or IP)
-    self.port = port or ('server_port' in self.config['server_port'] or PORT)
+    # self.config = config.get()
+    self.ip = ip or IP
+    # self.ip = ip or ('server_ip' in self.config['server_ip'] or IP)
+    self.port = port or PORT
+    # self.port = port or ('server_port' in self.config['server_port'] or PORT)
     self.greeter = Greeter()
     # self.greeter.set_output_methods('voice|print')
 

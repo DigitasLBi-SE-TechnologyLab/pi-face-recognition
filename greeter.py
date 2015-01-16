@@ -17,7 +17,7 @@ class Greeter:
     "voice": False,
     "print": True
   }
-  confidence_threshold = 4000
+  confidence_threshold = 1500
   greeting_delay_s = 30
   recent_greetings = {}
 
