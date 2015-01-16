@@ -37,7 +37,7 @@ class Detector:
     self.port = port or PORT
     # self.port = port or ('server_port' in self.config['server_port'] or PORT)
     self.greeter = Greeter()
-    # self.greeter.set_output_methods('voice|print')
+    self.greeter.set_output_methods('voice|print')
 
 
   def set_threading_enabled(self, value):
