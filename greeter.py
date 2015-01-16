@@ -26,12 +26,12 @@ class Greeter:
     self.config = config.get()
     self.load_greetings()
 
-    if 'output_methods' in self.config:
-      self.set_output_methods(self.config['output_methods'])
-    if 'greeting_delay_s' in self.config:
-      self.greeting_delay_s = self.config['greeting_delay_s']
-    if 'confidence_threshold' in self.config:
-      self.confidence_threshold = self.config['confidence_threshold']
+    # if 'output_methods' in self.config:
+    #   self.set_output_methods(self.config['output_methods'])
+    # if 'greeting_delay_s' in self.config:
+    #   self.greeting_delay_s = self.config['greeting_delay_s']
+    # if 'confidence_threshold' in self.config:
+    #   self.confidence_threshold = self.config['confidence_threshold']
 
 
   def load_greetings(self):
