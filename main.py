@@ -13,7 +13,7 @@ if __name__ == '__main__':
 
   detector = Detector(args.ip, args.port)
 
-  if platform.system() == 'Windows':
+  if platform.system() == 'Windows' or platform.system() == 'Darwin':
     import win_recorder
     win_recorder.record_forever(detector)
   else:  
